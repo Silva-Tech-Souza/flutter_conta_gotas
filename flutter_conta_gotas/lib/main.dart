@@ -31,8 +31,7 @@ int imageWidth;
 int imageHeight;
 int tipo;
 Color corbtn_gotas;
-int cor;
-
+Color cor;
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -53,8 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
         rgbaImageData.lengthInBytes ~/ Uint32List.bytesPerElement);
     oldColor = _getColor(words, offset.dx, offset.dy);
     corbtn_gotas = oldColor;
-    print("$corbtn_gotas  +  ----- +    $oldColor");
-
     return oldColor;
   }
 
@@ -62,14 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
     int x = x1.toInt();
     int y = y1.toInt();
     var offset = x + y * imageWidth;
-    print("$corbtn_gotas  +  ----- +    $oldColor");
-
     return Color(words[offset]);
   }
 
-  void _ondtap(Offset offset, GlobalKey key) async {
-    corbtn_gotas = await capturePng(key, Offset(offset.dx, offset.dy));
-    print("$corbtn_gotas  +  ----- +    $oldColor");
+  void ondtap(Offset offset, GlobalKey key) async {
+    capturePng(key, Offset(offset.dx, offset.dy)).then((data) {
+      setState(() {
+        cor = corbtn_gotas;
+      });
+    });
   }
 
   @override
@@ -77,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     corbtn_gotas = Colors.blue;
     tipo = 0;
-  
   }
 
   @override
@@ -85,52 +82,71 @@ class _MyHomePageState extends State<MyHomePage> {
     // var sizeH = MediaQuery.of(context).size.height;
     //var sizeW = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: RepaintBoundary(
-        key: floodFillKey,
-        child: new Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: new GestureDetector(
-            onTapDown: (TapDownDetails detail) {
-              _ondtap(detail.globalPosition, floodFillKey);
-              setState(() {
-                corbtn_gotas = oldColor;
-                cor = int.parse(corbtn_gotas.toString());
-                print(cor);
-                tipo = 1;
-
-               
-              });
-            },
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    height: 50,
-                    width: double.infinity,
-                    color: Colors.red,
-                    child: Text("dfsdf"),
-                  ),
-                  Container(
-                    height: 50,
-                    width: double.infinity,
-                    color: Colors.blue,
-                    child: Text("dfsdf"),
-                  ),
-                ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: RepaintBoundary(
+          key: floodFillKey,
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: InteractiveViewer(
+              scaleEnabled: false,
+              panEnabled: false,
+              onInteractionStart: (ScaleStartDetails detail) {
+                ondtap(detail.localFocalPoint, floodFillKey);
+                setState(() {
+                  cor = corbtn_gotas;
+                });
+              },
+              onInteractionUpdate: (ScaleUpdateDetails detail) {
+                ondtap(detail.localFocalPoint, floodFillKey);
+                setState(() {
+                  cor = corbtn_gotas;
+                });
+              },
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 160,
+                      width: double.infinity,
+                      color: Colors.red,
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                    ),
+                    Container(
+                      height: 160,
+                      width: double.infinity,
+                      color: Colors.blue,
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                    ),
+                    Container(
+                      height: 160,
+                      width: double.infinity,
+                      color: Colors.green,
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                    ),
+                    Container(
+                      height: 150,
+                      width: double.infinity,
+                      color: Colors.pink,
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-      onPressed: () {},
-      backgroundColor: corbtn_gotas,
-      tooltip: 'Increment',
-      child: Icon(Icons.add),
-    ),
+        onPressed: () {},
+        backgroundColor: corbtn_gotas,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
