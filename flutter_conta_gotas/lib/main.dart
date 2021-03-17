@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     capturePng(key, Offset(offset.dx, offset.dy)).then((data) {
       setState(() {
         cor = corbtn_gotas;
+       
       });
     });
   }
@@ -90,21 +91,23 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            child: InteractiveViewer(
-              scaleEnabled: false,
-              panEnabled: false,
-              onInteractionStart: (ScaleStartDetails detail) {
-                ondtap(detail.localFocalPoint, floodFillKey);
+            child: GestureDetector(
+            
+            onTapDown: (TapDownDetails detail) {
+            ondtap(detail.globalPosition, floodFillKey);
                 setState(() {
                   cor = corbtn_gotas;
+                  
                 });
-              },
-              onInteractionUpdate: (ScaleUpdateDetails detail) {
-                ondtap(detail.localFocalPoint, floodFillKey);
+            },
+            onPanUpdate: (DragUpdateDetails details) {
+             ondtap(details.globalPosition, floodFillKey);
                 setState(() {
                   cor = corbtn_gotas;
+                 
                 });
-              },
+            },
+  
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -114,25 +117,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 160,
                       width: double.infinity,
                       color: Colors.red,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ----+ $words"),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
                       color: Colors.blue,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ------- + $words"),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
                       color: Colors.green,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ------- + $words"),
                     ),
                     Container(
                       height: 150,
                       width: double.infinity,
                       color: Colors.pink,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ------- + $words"),
                     ),
                   ],
                 ),
