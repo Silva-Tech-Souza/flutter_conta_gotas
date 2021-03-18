@@ -30,6 +30,8 @@ Color oldColor, pixel;
 int imageWidth;
 int imageHeight;
 int tipo;
+String cores_inversa;
+int cores_inversa2;
 Color corbtn_gotas;
 Color cor;
 
@@ -52,6 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
         rgbaImageData.lengthInBytes ~/ Uint32List.bytesPerElement);
     oldColor = _getColor(words, offset.dx, offset.dy);
     corbtn_gotas = oldColor;
+
+    corbtn_gotas = cor;
+
     return oldColor;
   }
 
@@ -59,14 +64,18 @@ class _MyHomePageState extends State<MyHomePage> {
     int x = x1.toInt();
     int y = y1.toInt();
     var offset = x + y * imageWidth;
+
+    List<String> cores = words[offset].toString().split("X");
+    cores_inversa = cores[0] + "XFF" + cores[0].split('').reversed.join();
+    cores_inversa2 = int.parse(cores_inversa);
+    cor = Color(cores_inversa2);
     return Color(words[offset]);
   }
 
   void ondtap(Offset offset, GlobalKey key) async {
     capturePng(key, Offset(offset.dx, offset.dy)).then((data) {
       setState(() {
-        cor = corbtn_gotas;
-       
+        corbtn_gotas = cor;
       });
     });
   }
@@ -92,22 +101,18 @@ class _MyHomePageState extends State<MyHomePage> {
             width: double.infinity,
             height: double.infinity,
             child: GestureDetector(
-            
-            onTapDown: (TapDownDetails detail) {
-            ondtap(detail.globalPosition, floodFillKey);
+              onTapDown: (TapDownDetails detail) {
+                ondtap(detail.globalPosition, floodFillKey);
                 setState(() {
-                  cor = corbtn_gotas;
-                  
+                  corbtn_gotas = cor;
                 });
-            },
-            onPanUpdate: (DragUpdateDetails details) {
-             ondtap(details.globalPosition, floodFillKey);
+              },
+              onPanUpdate: (DragUpdateDetails details) {
+                ondtap(details.globalPosition, floodFillKey);
                 setState(() {
-                  cor = corbtn_gotas;
-                 
+                  corbtn_gotas = cor;
                 });
-            },
-  
+              },
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -116,26 +121,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                       height: 160,
                       width: double.infinity,
-                      color: Colors.red,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ----+ $words"),
+                      color: Color(0xFFAC1313),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
-                      color: Colors.blue,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ------- + $words"),
+                      color: Color(0xFF71F311),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor "),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
-                      color: Colors.green,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ------- + $words"),
+                      color: Color(0xFFF103B9),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor "),
                     ),
                     Container(
                       height: 150,
                       width: double.infinity,
-                      color: Colors.pink,
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor + ------- + $words"),
+                      color: Color(0xFF7103A9),
+                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
                     ),
                   ],
                 ),
