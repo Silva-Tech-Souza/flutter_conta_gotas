@@ -30,10 +30,12 @@ Color oldColor, pixel;
 int imageWidth;
 int imageHeight;
 int tipo;
-String cores_inversa;
+String cores_inversa, controle;
 int cores_inversa2;
 Color corbtn_gotas;
 Color cor;
+String r, g, b;
+List<String> cores, cores2;
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -54,9 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
         rgbaImageData.lengthInBytes ~/ Uint32List.bytesPerElement);
     oldColor = _getColor(words, offset.dx, offset.dy);
     corbtn_gotas = oldColor;
+    cores = corbtn_gotas.toString().split('xff');
+    cores2 = cores[1].toString().split(')');
+    cores_inversa = cores2[0].toString().split('').reversed.join('');
+    controle = "Color(0xff$cores_inversa)";
 
-    corbtn_gotas = cor;
-
+    print('$oldColor');
     return oldColor;
   }
 
@@ -64,18 +69,30 @@ class _MyHomePageState extends State<MyHomePage> {
     int x = x1.toInt();
     int y = y1.toInt();
     var offset = x + y * imageWidth;
+    /* controle = words[offset].toString();
+      cores = controle.split('xff');
+      cores_inversa = "0xff" + cores[1].toString().split('').reversed.join('');
+      cores_inversa2 = int.parse(cores_inversa);
+      cor = Color(cores_inversa2);*/
 
-    List<String> cores = words[offset].toString().split("X");
-    cores_inversa = cores[0] + "XFF" + cores[0].split('').reversed.join();
-    cores_inversa2 = int.parse(cores_inversa);
-    cor = Color(cores_inversa2);
     return Color(words[offset]);
   }
 
   void ondtap(Offset offset, GlobalKey key) async {
     capturePng(key, Offset(offset.dx, offset.dy)).then((data) {
       setState(() {
-        corbtn_gotas = cor;
+        corbtn_gotas = oldColor;
+        cores = corbtn_gotas.toString().split('xff');
+        cores2 = cores[1].toString().split(')');
+    
+       
+                  r =
+                      cores2[0].toString().substring(0, 2);
+		  g  =
+                      cores2[0].toString().substring(2, 4);
+		b  =
+                      cores2[0].toString().substring(4, 6);
+                  controle = "Color(0xff$b$g$r)";
       });
     });
   }
@@ -104,13 +121,34 @@ class _MyHomePageState extends State<MyHomePage> {
               onTapDown: (TapDownDetails detail) {
                 ondtap(detail.globalPosition, floodFillKey);
                 setState(() {
-                  corbtn_gotas = cor;
+                  corbtn_gotas = oldColor;
+                  cores = corbtn_gotas.toString().split('xff');
+                  cores2 = cores[1].toString().split(')');
+                  r =
+                      cores2[0].toString().split('').reversed.join('');
+                  
+                  r =
+                      cores2[0].toString().substring(0, 2);
+		  g  =
+                      cores2[0].toString().substring(2, 4);
+		b  =
+                      cores2[0].toString().substring(4, 6);
+                  controle = "Color(0xff$b$g$r)";
                 });
               },
               onPanUpdate: (DragUpdateDetails details) {
                 ondtap(details.globalPosition, floodFillKey);
                 setState(() {
-                  corbtn_gotas = cor;
+                  corbtn_gotas = oldColor;
+                  cores = corbtn_gotas.toString().split('xff');
+                  cores2 = cores[1].toString().split(')');
+                  r =
+                      cores2[0].toString().substring(0, 2);
+		  g  =
+                      cores2[0].toString().substring(2, 4);
+		b  =
+                      cores2[0].toString().substring(4, 6);
+                  controle = "Color(0xff$b$g$r)";
                 });
               },
               child: Container(
@@ -122,25 +160,26 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 160,
                       width: double.infinity,
                       color: Color(0xFFAC1313),
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                      child: Text("$corbtn_gotas  +  ----- + $controle "),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
                       color: Color(0xFF71F311),
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor "),
+                      child: Text("$corbtn_gotas  +  ----- +   "),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
                       color: Color(0xFFF103B9),
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor "),
+                      child: Text(
+                          "$corbtn_gotas  +  ----- + $cores + ---- $cores_inversa "),
                     ),
                     Container(
                       height: 150,
                       width: double.infinity,
                       color: Color(0xFF7103A9),
-                      child: Text("$corbtn_gotas  +  ----- +    $oldColor"),
+                      child: Text("$corbtn_gotas  +  ----- +  $cores2 "),
                     ),
                   ],
                 ),
