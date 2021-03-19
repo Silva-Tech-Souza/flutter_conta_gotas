@@ -61,8 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
     r = cores2[0].toString().substring(0, 2);
     g = cores2[0].toString().substring(2, 4);
     b = cores2[0].toString().substring(4, 6);
-    controle = "Color(0xff$cores_inversa)";
-
+    controle = "Color(0xff$b$g$r)";
+ 
     print('$oldColor');
     return oldColor;
   }
