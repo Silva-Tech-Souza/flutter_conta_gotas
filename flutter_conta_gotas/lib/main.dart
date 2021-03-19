@@ -34,7 +34,7 @@ String cores_inversa, controle;
 int cores_inversa2;
 Color corbtn_gotas;
 Color cor;
-String r, g, b;
+String r, g, b, colorString;
 List<String> cores, cores2;
 
 class MyHomePage extends StatefulWidget {
@@ -62,7 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
     g = cores2[0].toString().substring(2, 4);
     b = cores2[0].toString().substring(4, 6);
     controle = "Color(0xff$b$g$r)";
- 
+    colorString = controle.split('(0x')[1].split(')')[0];
+    int value = int.parse(colorString, radix: 16);
+    corbtn_gotas = Color(value);
     print('$oldColor');
     return oldColor;
   }
@@ -71,11 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
     int x = x1.toInt();
     int y = y1.toInt();
     var offset = x + y * imageWidth;
-    /* controle = words[offset].toString();
-      cores = controle.split('xff');
-      cores_inversa = "0xff" + cores[1].toString().split('').reversed.join('');
-      cores_inversa2 = int.parse(cores_inversa);
-      cor = Color(cores_inversa2);*/
 
     return Color(words[offset]);
   }
@@ -90,6 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
         g = cores2[0].toString().substring(2, 4);
         b = cores2[0].toString().substring(4, 6);
         controle = "Color(0xff$b$g$r)";
+        colorString = controle.split('(0x')[1].split(')')[0];
+        int value = int.parse(colorString, radix: 16);
+        corbtn_gotas = Color(value);
       });
     });
   }
@@ -126,6 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   g = cores2[0].toString().substring(2, 4);
                   b = cores2[0].toString().substring(4, 6);
                   controle = "Color(0xff$b$g$r)";
+                  colorString = controle.split('(0x')[1].split(')')[0];
+                  int value = int.parse(colorString, radix: 16);
+                  corbtn_gotas = Color(value);
                 });
               },
               onPanUpdate: (DragUpdateDetails details) {
@@ -138,6 +141,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   g = cores2[0].toString().substring(2, 4);
                   b = cores2[0].toString().substring(4, 6);
                   controle = "Color(0xff$b$g$r)";
+                  colorString = controle.split('(0x')[1].split(')')[0];
+                  int value = int.parse(colorString, radix: 16);
+                  corbtn_gotas = Color(value);
                 });
               },
               child: Container(
@@ -149,26 +155,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 160,
                       width: double.infinity,
                       color: Color(0xFFAC1313),
-                      child: Text("$corbtn_gotas  +  ----- + $controle "),
+                      child:
+                          Text("$corbtn_gotas  +  ----- +controle: $controle "),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
                       color: Color(0xFF71F311),
-                      child: Text("$corbtn_gotas  +  ----- +   "),
+                      child: Text(
+                          "$corbtn_gotas  +  -----colorstring:  $colorString   "),
                     ),
                     Container(
                       height: 160,
                       width: double.infinity,
                       color: Color(0xFFF103B9),
-                      child: Text(
-                          "$corbtn_gotas  +  ----- + $cores + ---- $cores_inversa "),
+                      child:
+                          Text("  cores $cores + --inversa:- $cores_inversa "),
                     ),
                     Container(
                       height: 150,
                       width: double.infinity,
                       color: Color(0xFF7103A9),
-                      child: Text("$corbtn_gotas  +  ----- +  $cores2 "),
+                      child: Text("cores2  $cores2 "),
                     ),
                   ],
                 ),
