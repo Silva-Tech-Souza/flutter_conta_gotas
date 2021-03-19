@@ -58,7 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
     corbtn_gotas = oldColor;
     cores = corbtn_gotas.toString().split('xff');
     cores2 = cores[1].toString().split(')');
-    cores_inversa = cores2[0].toString().split('').reversed.join('');
+    r = cores2[0].toString().substring(0, 2);
+    g = cores2[0].toString().substring(2, 4);
+    b = cores2[0].toString().substring(4, 6);
     controle = "Color(0xff$cores_inversa)";
 
     print('$oldColor');
@@ -84,15 +86,10 @@ class _MyHomePageState extends State<MyHomePage> {
         corbtn_gotas = oldColor;
         cores = corbtn_gotas.toString().split('xff');
         cores2 = cores[1].toString().split(')');
-    
-       
-                  r =
-                      cores2[0].toString().substring(0, 2);
-		  g  =
-                      cores2[0].toString().substring(2, 4);
-		b  =
-                      cores2[0].toString().substring(4, 6);
-                  controle = "Color(0xff$b$g$r)";
+        r = cores2[0].toString().substring(0, 2);
+        g = cores2[0].toString().substring(2, 4);
+        b = cores2[0].toString().substring(4, 6);
+        controle = "Color(0xff$b$g$r)";
       });
     });
   }
@@ -124,15 +121,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   corbtn_gotas = oldColor;
                   cores = corbtn_gotas.toString().split('xff');
                   cores2 = cores[1].toString().split(')');
-                  r =
-                      cores2[0].toString().split('').reversed.join('');
-                  
-                  r =
-                      cores2[0].toString().substring(0, 2);
-		  g  =
-                      cores2[0].toString().substring(2, 4);
-		b  =
-                      cores2[0].toString().substring(4, 6);
+
+                  r = cores2[0].toString().substring(0, 2);
+                  g = cores2[0].toString().substring(2, 4);
+                  b = cores2[0].toString().substring(4, 6);
                   controle = "Color(0xff$b$g$r)";
                 });
               },
@@ -142,12 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   corbtn_gotas = oldColor;
                   cores = corbtn_gotas.toString().split('xff');
                   cores2 = cores[1].toString().split(')');
-                  r =
-                      cores2[0].toString().substring(0, 2);
-		  g  =
-                      cores2[0].toString().substring(2, 4);
-		b  =
-                      cores2[0].toString().substring(4, 6);
+                  r = cores2[0].toString().substring(0, 2);
+                  g = cores2[0].toString().substring(2, 4);
+                  b = cores2[0].toString().substring(4, 6);
                   controle = "Color(0xff$b$g$r)";
                 });
               },
